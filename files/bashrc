@@ -1,0 +1,267 @@
+
+# Generic $dotdir/bashshrc
+# Engineering Services (ES)
+#
+##
+# Things the user might wish to set.
+export USER_PATH="~/bin"			# Extra paths.
+export EDITOR=emacs				# Preferred editor.
+export PRINTER=lp				# Preferred printer.
+export NNTPSERVER=usenet.cisco.com		# Preferred news server.
+
+##
+# Should the full environment be set up even for non-interactive shells?
+# Probably not but here is a variable to control it.
+export FULLENV=false				# 'true' or 'false'
+
+##
+# Should all paths (even NFS, which might hang) be set up at login?
+# The alias "fullpath" is available to setup your full path.  It can
+# also be used to change your path by changing USER_PATH above.
+export FULLPATH=true				# 'true' or 'false'
+
+###########################################################################
+# Everything above this line helps configure the environment.
+
+# This line should not be removed.
+dotdir=~/.files; [ -f $dotdir/sys_bashrc ] && . $dotdir/sys_bashrc
+[ $FULLENV != "true" ] && [ -z "$PS1" ] && return
+
+###########################################################################
+# Everything below this line is run for interactive shells.
+# If you wish the full environment even in non-interactive
+# shells set FULLENV above to 'true'.
+
+umask 022                        # no write by group or other
+export autologout=0              # disable autologout
+export FIGNORE=".o"              # don't complete .o files
+export HISTFILE=~/.bash_history  # history file
+export HISTFILESIZE=1000         # history file size
+export HISTSIZE=1000             # save last 128 commands
+export ignoreeof=10              # disable ^D for logout (up to 10)
+set -C                           # disable redirect overwrite
+set -b                           # enable immediate job notify
+export PS1="\h> "            # shell prompt format
+
+##
+# Source other rc files after this line.
+[ -f ~/.bashrc_LOB ] && . ~/.bashrc_LOB
+[ -f ~/.bashrc_BU ] && . ~/.bashrc_BU
+[ -f ~/.bashrc_USER ] && . ~/.bashrc_USER
+
+# alias for emacs24 
+alias emacs='/users/akshdorw/bin/emacs -nw'
+alias emacsq='/users/akshdorw/bin/emacs -nw -q  -l ~/.emacs_large_file'
+alias l='ls -lrth'
+
+
+# Get rid of the /router/bin/find!!!!
+alias find='/usr/bin/find'
+
+# set TERM
+export PATH=/nobackup/akshdorw/local/bin:$PATH
+export TERM=xterm-256color
+
+# Macallan workspace settings
+export BINOS_ROOT=$(pwd)
+export WS=/ws/akshdorw-sjc/
+export INSTALL_DIR_PATH=$BINOS_ROOT/platforms/ngwc/doppler_sdk/spectra/scripts/
+export PATH=/auto/step-build/cobalt/mcp_cable:/auto/binos-tools/bin:/auto/gsg-sw/inst/share/bin:$PATH:/auto/sw/packages/erlang/R16B03/bin:/sw/packages/ccache/3.3.4/bin/
+export IMAGE_DEPOT=/auto/mcp-project1/submit2commit/polaris_dev/image_depot/
+export XE_CCACHE_ENABLE=true
+
+alias load='. ~/.bashrc'
+alias b='cd $BINOS_ROOT'
+alias d='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk'
+alias s='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/spectra'
+alias f='cd $BINOS_ROOT/platforms/ngwc/fed/feature/'
+alias a='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/aal'
+alias n='cd /nobackup/akshdorw'
+alias i='cd $BINOS_ROOT/../ios/sys'
+alias ws='cd /ws/akshdorw-sjc/'
+alias bs='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift'
+alias fp='cd $BINOS_ROOT/fman/fp'
+alias rp='cd $BINOS_ROOT/fman/rp'
+alias cm='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/nextgen/metadata/D_T0097/'
+
+#set acme diff aliases for emacs
+alias eon='export ACME_DIFF_CMD="/users/akshdorw/bin/emacs -diff" ACME_DIFF_OPTS=""' 
+alias eoff='unset ACME_DIFF_CMD ACME_DIFF_OPTS'
+
+#build alias
+alias bb='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift; gmk -f Plx=-ngwc TARGET=noarch source-ngwc GENERATE_PACKAGE=1 SPECTRA_BUILD=1'
+alias bc='cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift; gmk -f Plx=-ngwc TARGET=noarch clean-ngwc GENERATE_PACKAGE=1 SPECTRA_BUILD=1'
+alias cmk="cd /nobackup/akshdorw/cima; /auto/dcdtools/cae/bin/make CIMA_J=8 Cima CIMA_OPT=\"-DPCAP\" CIMA_LDFLAGS=\"-lpcap -g\" CDEBUG=1 LSF=; tar czvf cima.tgz Cima libcrypto.so.10"
+alias sb_cs='gmk -f Plx=-spectraCS TARGET=host_ut_cge7 NEW_CODE=1 SPECTRA_BUILD=1 all-spectraCS'
+alias sb_d='gmk -f Plx=-spectraD TARGET=host_ut_cge7 NEW_CODE=1 SPECTRA_BUILD=1 all-spectraD'
+alias cat3k='gmk  -f Plx=-ngwc  TARGET=mips64_cge7 all-ngwc'
+alias cat9k='gmk -f Plx=-ngwc TARGET=x86_64_cge7 all-ngwc'
+
+#tools aliases
+alias run_sa='/auto/ses/bin/run_sa'
+alias test_runner='$BINOS_ROOT/platforms/ngwc/doppler_sdk/spectra/scripts/test_runner.py'
+alias spectra_build='$BINOS_ROOT/platforms/ngwc/doppler_sdk/tools/scripts/spectra_build.py'
+alias spectra_commit_sanity='/auto/tftp-sjc-users1/vikagarw/spectra_commit_sanity.sh'
+alias hex_to_pcap='python /ws/akshdorw-sjc/tmp/hex_to_pcap.py'
+alias find_sun='find $BINOS_ROOT/linkfarm/* -name "*.sun"'
+alias sshfs_ads_6955='sshfs -o reconnect -C -o workaround=all -o allow_other,defer_permissions,IdentityFile=~/.ssh/id_rsa akshdorw@sjc-ads-6955-:/nobackup/akshdorw/ /Users/akshdorw/sjc-ads-6955'
+alias sshfs_ads_6551='sshfs -o reconnect -C -o workaround=all -o allow_other,defer_permissions,IdentityFile=~/.ssh/id_rsa akshdorw@sjc-ads-6551-:/nobackup/akshdorw/ /Users/akshdorw/sjc-ads-6551'
+
+#copy image
+alias cp_cat3k="cp $BINOS_ROOT/linkfarm/iso-edison/cat3k_caa-universalk9.*SSA.bin /auto/tftp-sjc-users4/akshdorw/cat3k.bin"
+alias cp_cat9k="cp $BINOS_ROOT/linkfarm/iso-cat9k/cat9k_iosxe.*SSA.bin /auto/tftp-sjc-users4/akshdorw/cat9k.bin"
+alias cp_nfs_cat9k="cp $BINOS_ROOT/linkfarm/iso-cat9k/cat9k_iosxe_nfs.*.bin /auto/tftp-sjc-users4/akshdorw/cat9k_nfs.bin"
+alias cp_vcat9k="cp $BINOS_ROOT/linkfarm/iso-vngwc/vngwc-universalk9*_akshdorw-vga.iso /auto/tftp-sjc-users4/akshdorw/vcat9k.iso"
+# TMUX magic 
+hname=$(hostname)
+if [ $hname == "sjc-ads-6551" ]; then
+   /router/bin/tmux attach-session -t wireless-6551
+elif [ $hname == "sjc-ads-6955" ]; then
+   /router/bin/tmux attach-session -t wireless-6955
+fi
+
+# GDB history size 
+export HISTSIZE=1000
+
+function pull_ws {
+    
+    if [ $# -ne 2 ] ; then
+       return
+    fi
+
+    ws="pd_$1_$2"
+
+    cd /nobackup/akshdorw
+    mkdir $ws
+    cd $ws
+    acme nw -sb xe -dl polaris_dev%$2
+    cd binos
+    ws='/nobackup/akshdorw/$ws/binos'
+    export BINOS_ROOT=$(ws)
+}
+
+function bldcscope {
+    if [ "$#" -lt 1 ]; then
+       cur_dir="."
+    else
+	cur_dir=$1
+    fi
+ 
+        # Remove existing files
+    if [ -f ${cur_dir}/cscope.files ]; then
+        rm ${cur_dir}/cscope.files
+    fi
+    if [ -f ${cur_dir}/cscope.out ]; then
+        rm ${cur_dir}/cscope.out
+    fi
+    if [ -f ${cur_dir}/cscope.in.out ]; then
+        rm ${cur_dir}/cscope.in.out
+    fi
+    if [ -f ${cur_dir}/cscope.po.out ]; then
+        rm ${cur_dir}/cscope.po.out
+    fi
+ 
+    if [ "$#" -eq 1 ]; then
+pushd .
+cd ${cur_dir}
+    fi
+    find . -name "*.[ch]" -o -name "*.asm" -o -name "*.upc" -o -name "*.cs" -follow -print > cscope.files
+        cscope -i cscope.files -b
+ 
+        if [ "$#" -eq 1 ]; then
+   popd
+        fi
+}
+
+#if [[ $(pwd) =~ .*binos.* ]]; then
+#   echo "Already at binos path"
+#else
+#   cd /nobackup/akshdorw
+#fi
+
+function cs_blueshift_log {
+ pushd .
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/DopplerCS
+ if [ ! -f ./release/BlueShift.exe ]; then
+ make blueshift
+ fi
+
+ /auto/ecsg-paq1/mono-4.4.2/bin/mono --debug release/BlueShift.exe -asic=DopplerCS -rdl=/auto/dopplercs/releases/RDL/DopplerCSRMap_T0056.rdl.xml -dt -dm -db -log0xFFFF
+ popd
+}
+
+function d_blueshift_log {
+ pushd .
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/DopplerD
+ if [ ! -f ./release/BlueShift.exe ]; then
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/nextgen
+ make blueshift TARGET=DopplerD
+ fi
+
+cd ${BINOS_ROOT}/platforms/ngwc/doppler_sdk/blueshift/nextgen/metadata/D_T0097
+ gunzip DopplerDMap.simple.xml.gz
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/DopplerD
+ /auto/blueshift/mono/bin/mono --debug release/BlueShift.exe -asic=DopplerD -rdl=${BINOS_ROOT}/platforms/ngwc/doppler_sdk/blueshift/nextgen/metadata/D_T0097/DopplerDMap.simple.xml -dt -dm -db -log0xFFFF
+ popd
+}
+
+function e_blueshift_log {
+ pushd .
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/DopplerE
+ if [ ! -f ./release/BlueShift.exe ]; then
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/nextgen
+ make blueshift TARGET=DopplerE
+ fi
+
+cd ${BINOS_ROOT}/platforms/ngwc/doppler_sdk/blueshift/nextgen/metadata/E_T0063/
+ gunzip DopplerEChip.simple.xml.gz
+ cd $BINOS_ROOT/platforms/ngwc/doppler_sdk/blueshift/DopplerE
+ /auto/ecsg-paq1/mono-4.4.2/bin/mono --debug release/BlueShift.exe -asic=DopplerD -rdl=${BINOS_ROOT}/platforms/ngwc/doppler_sdk/blueshift/nextgen/metadata/E_T0063/DopplerEChip.simple.xml -dt -dm -db -log0xFFFF
+ popd
+}
+
+function msg ()
+{
+    MSG_TEMP=`date +"%F %r"`
+    MSG_TEMP=`echo [${0##/*/} $MSG_TEMP]`
+    echo "$MSG_TEMP $1"
+}
+
+function spectra_gdb {
+    if  [ "$#" -eq 3 ]; then
+        SPECTRA_ASIC=$1
+        SPECTRA_TESTCASE=$2
+	SPECTRA_RUNTIME="\"$3\""
+    elif [ "$#" -eq 2 ]; then
+        SPECTRA_ASIC=$1
+        SPECTRA_TESTCASE=$2
+	SPECTRA_RUNTIME="\"\""
+    else
+        msg "Invalid argument"
+        return 1
+    fi
+    echo run_time_param: ${SPECTRA_RUNTIME}
+    SPECTRA_PID=0
+    SPECTRA_GDB=0
+    msg "Start test case..."
+    $BINOS_ROOT/platforms/ngwc/doppler_sdk/spectra/scripts/test_runner.py -a Doppler${SPECTRA_ASIC} -t ${SPECTRA_TESTCASE} -r "TESTNAME=NetflowLvxVlanIpv4 CONFIGFILE=NetflowLvxVlanWirelessIpv4VxlanEgress.json TESTMODE=FEATURE" -g  &
+    SPECTRA_PID=$!
+    while [ $SPECTRA_PID -eq 0 ]; do
+        sleep 1
+        SPECTRA_PID=$!
+    done
+    sleep 10
+    msg "Start GDB server..."
+    $BINOS_ROOT/platforms/ngwc/doppler_sdk/spectra/scripts/gdb_server.py &
+    SPECTRA_GDB=$!
+    if [ $SPECTRA_PID -eq 0 ]; then
+        msg "Failed to kick off test script"
+        return 1
+    fi
+    if [ $SPECTRA_GDB -eq 0 ]; then
+        msg "Failed to kick off GDB server"
+        return 1
+    fi
+    msg "Start GDB..."
+    /router/bin/gdb-7.8.2 --command $BINOS_ROOT/linkfarm/host_ut_cge7-spectra${SPECTRA_ASIC}/usr/binos/bin/.gdbinit
+}

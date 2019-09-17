@@ -1,0 +1,23 @@
+# Generic $dotdir/bashrc_USER
+# Engineering Services (ES)
+#
+# Replace this file with your department's custom bashrc_USER file, if any.
+
+##
+# Things the user might wish to set.
+#setenv EDITOR /usr/cisco/bin/emacs		# Preferred editor.
+
+## sample code that you may want to activate or modify:
+# The following variables are already configured with the default values in
+# the cshrc file. To activate a command line that's been "commented out",
+# remove the #.
+#export HISTSIZE=200                    # save last 200 commands
+#export ignoreeof=0			# enable ^D for logout
+
+# misc. home-grown commands:
+alias h=history
+alias ll="ls -al"
+#function to look for specific processes
+psg () { command ps -ef | egrep "(UID|"$@")"|grep -v egrep ; }
+##
+# Source other rc files after this line.

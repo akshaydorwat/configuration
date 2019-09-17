@@ -1,0 +1,49 @@
+    
+    ;; Read only mode
+    ;;(setq read-only-mode t)
+
+    ;; disable large file warning 
+    (setq large-file-warning-threshold nil)
+
+    ;; Dont save buffer
+    (buffer-disable-undo)
+
+    ;; enable fundamental mode
+    (fundamental-mode)
+
+    ;;disable backup
+    (setq backup-inhibited t)
+
+    ;;disable auto save
+    (setq auto-save-default nil)
+
+    ;;Toggle search
+    (toggle-case-fold-search)
+
+    ;; Set xterm mouse mode on
+    ;;(xterm-mouse-mode 1)
+
+    ;; sync scrolling
+    (global-set-key [(control down)]  (lambda () (interactive) (scroll-up   1)) )
+    (global-set-key [(control up)]  (lambda () (interactive) (scroll-down 1)) )
+
+    ;; window move short cut
+    (global-set-key [(shift left)] 'windmove-left)
+    (global-set-key [(shift right)] 'windmove-right)
+    (global-set-key [(shift up)] 'windmove-up)
+    (global-set-key [(shift down)] 'windmove-down)
+
+    ;;
+    (global-set-key [(f2)] 'scroll-all-mode)
+    (global-set-key [(f3)] 'toggle-case-fold-search)
+    (global-set-key [(f4)] 'xterm-mouse-mode)
+
+    (load-theme 'tsdh-dark t)
+    
+;; clear command for eshell
+(defun eshell/clear ()
+    "04Dec2001 - sailor, to clear the eshell buffer."
+      (interactive)
+        (let ((inhibit-read-only t))
+              (erase-buffer)))
+    

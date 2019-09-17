@@ -1,0 +1,16 @@
+# Generic $dotdir/bash_BU
+# Engineering Services (ES)
+#
+# Replace this file with your department's custom bashrc_BU file, if any.
+
+# Cleartool commands
+ct () { command cleartool "$@" ; }
+set-view () { command cleartool setview "$1" ; }  #Set to a view given as arg 1
+alias cats="ct catcs"                   #Display config spec
+alias pwv="ct pwv"                      #Print Working View
+
+# use NFS to access tftp server instead of rcp
+export MAKEFLAGS="TFTPHOST= COLON= COPY=cp"
+
+# Setup ccache
+. /sw/packages/ccache/current/bin/setup-ccache

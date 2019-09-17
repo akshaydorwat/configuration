@@ -1,0 +1,41 @@
+# Generic $dotdir/bashenv
+# Engineering Services (ES)
+#
+##
+# Set these in case user didn't.
+[ -z $EDITOR ] && export EDITOR=vi
+[ -z $VISUAL ] && export export VISUAL="$EDITOR"
+[ -z $FULLENV ] && export FULLENV=false
+[ -z $FULLPATH ] && export FULLPATH=false
+[ -z $NNTPSERVER ] && export NNTPSERVER=usenet.cisco.com
+
+export PATH="/bin:/usr/bin:."
+export OS_PATH="/bin /usr/bin"		# "Always" correct. -ljr
+export MANPATH="/usr/man"
+
+# Set the LC_ALL environment variable to "C" uniformly. This will force
+# any GNU tools that were built with internationalization to return items
+# in the same order (ASCII numeric order) as their corresponding Solaris
+# brethren... things like "grep", "ls"and "sort", in particular.
+export LC_ALL=C
+
+SYS="`uname -s`"
+if [ "$SYS" != "" ]; then
+	 osenv=$dotdir/$SYS/bashenv
+	 [ -f $osenv ] && . $osenv
+
+	# Some of these variables are set up by sub-scripts.
+	if [ -n "$FULLPATH" ]; then
+		case   "$FULLPATH" in
+		false)
+			export PATH="$OS_PATH ."
+			;;
+
+		*)	
+			export PATH="$SW_PATH:$APPS_PATH:$LOCAL_PATH:$USER_PATH:$OS_PATH:."
+			;;
+		esac
+	fi
+fi
+
+export BASHENV_SET=true

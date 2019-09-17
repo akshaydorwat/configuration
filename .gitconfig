@@ -1,0 +1,55 @@
+[usercl]
+	name = Akshay Dorwat
+	email = akshdorw@cisco.com
+[push]
+	default = simple
+[credential]
+	helper = /usr/cisco/packages/acme/current/adm/git-credential-ark
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	superclean = "!f(){ git clean -xffd && git checkout .;};f"
+	pwd = !pwd
+	st = status -uno
+	cl = clean -ffdx
+	bl = branch --list
+[core]
+	excludesfile = /users/akshdorw/.gitignore
+	editor = /users/akshdorw/bin/emacs -nw -q
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[filter "gofmt"]
+	clean = gofmt
+	smudge = cat
+[lfs]
+	credentials = enabled
+	dialtimeout = 60
+	tlstimeout = 60
+	activitytimeout = 900
+	concurrenttransfers = 8
+[diff]
+        tool = ediff
+    
+[difftool "ediff"]
+        cmd = /users/akshdorw/bin/emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+    
+[difftool]
+        prompt = false
+
+[merge]
+	tool = ediff
+
+[mergetool.ediff]
+    cmd = /users/akshdorw/bin/emacs  --eval \"(progn (defun ediff-write-merge-buffer () (let ((file ediff-merge-store-file)) (set-buffer ediff-buffer-C) (writ\
+e-region (point-min) (point-max) file) (message \\\"Merge buffer saved in: %s\\\" file) (set-buffer-modified-p nil) (sit-for 1))) (setq ediff-quit-hook 'kill\
+-emacs ediff-quit-merge-hook 'ediff-write-merge-buffer) (ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\"))\"
+
+[status]
+	showUntrackedFiles = no
+[user]
+	name = akshdorw
+	email = akshdorw@cisco.com
